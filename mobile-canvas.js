@@ -1,7 +1,7 @@
 (() => {
   const BASE_W = 1240;
   const BASE_H = 440;
-  const MOBILE_QUERY = '(max-width: 600px)';
+  const MOBILE_PORTRAIT_QUERY = '(max-width: 600px) and (orientation: portrait)';
   const MOBILE_CAMERA_ZOOM = 2;
 
   const frame = document.getElementById('gameFrame');
@@ -9,8 +9,8 @@
   if (!frame || !canvas) return;
 
   function syncMobileCanvasSize() {
-    const isMobile = window.matchMedia(MOBILE_QUERY).matches;
-    if (!isMobile) {
+    const isMobilePortrait = window.matchMedia(MOBILE_PORTRAIT_QUERY).matches;
+    if (!isMobilePortrait) {
       canvas.width = BASE_W;
       canvas.height = BASE_H;
       return;
