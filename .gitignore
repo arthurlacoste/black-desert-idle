@@ -1,5 +1,5 @@
 # anciennes versions archivées de index.html (historique local uniquement, pas de valeur en tant
-# que fichiers suivis désormais que le jeu est réparti en plusieurs fichiers -- voir README.md)
+# que fichiers suivis désormais que le jeu est réparti en plusieurs fichiers, voir README.md)
 ancienne version/
 
 # fichiers d'environnement/outils locaux
@@ -11,3 +11,8 @@ CLAUDE.md
 # cache Python (scripts/build.py)
 __pycache__/
 *.pyc
+
+# Node / Playwright
+node_modules/
+playwright-report/
+test-results/

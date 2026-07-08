@@ -37,7 +37,9 @@
 </div>
 
 <div id="achToastStack"></div>
+
 <div id="lootIconZoom"></div>
+
 <div id="resetNoticeOverlay" class="resetNoticeOverlay">
   <div class="resetNoticeCard">
     <div class="resetNoticeIcon" id="resetNoticeIcon">🔄</div>
@@ -60,6 +62,7 @@
     <div class="catTabs" id="chatTabs"></div>
     <div id="chatMessages"></div>
     <div id="chatInputRow">
+      
       <div id="chatMentionList"></div>
       <input type="text" id="chatInput" maxlength="300" placeholder="…">
       <button id="chatSendBtn">➤</button>
@@ -76,7 +79,7 @@
 <div id="sideMenu">
   <button id="btnCollapseMenu" title="Replier/déplier le menu">◀</button>
 
-
+  
   <div id="gameBar">
     <button id="btnDailyQuests"><span data-i18n="btnDailyQuests">🗒️ Quêtes</span><span id="questBadge"></span></button>
     <button id="btnMailbox"><span data-i18n="btnMailbox">📬 Courrier</span><span id="mailBadge"></span></button>
@@ -85,7 +88,7 @@
     <button id="btnAchievements"><span data-i18n="btnAchievements">🏅 Succès</span><span class="contentNewBadge" id="newBadgeAchievements">1</span></button>
     <button id="btnMarket" title="BETA — en construction, encore peu fonctionnel"><span data-i18n="btnMarketLbl">🏛️ Marché</span><span class="betaTag">BETA</span></button>
     <button id="btnLeaderboard" data-i18n="btnLeaderboard">🏆 Classement</button>
-
+    
   </div>
 
   <div id="userBar">
@@ -100,6 +103,7 @@
     <span id="saveStatus"></span>
   </div>
 
+  
   <div id="metaBar">
     <div id="onlineStatsBox">
       <div id="onlineCounter">🟢 <b id="onlineTotal">—</b> <span data-i18n="onlineLbl">en ligne</span><span id="onlineGuests"></span></div>
@@ -114,7 +118,7 @@
     <button id="btnWiki"><span data-i18n="btnWiki">📖 Wiki</span><span class="contentNewBadge" id="newBadgeWiki">1</span></button>
     <button id="btnPatch"><span data-i18n="btnPatch">📜 Notes de version</span><span id="patchBadge"></span></button>
     <a id="btnDiscord" href="https://discord.gg/fEubtqMjtP" target="_blank" rel="noopener noreferrer">💬 Discord</a>
-
+    
     <button id="btnDonation" class="lockedFeatureBtn" disabled title="Bientôt disponible"><span class="zoneTierLock">🔒</span><span data-i18n="btnDonation">💖 Soutenir</span></button>
     <div id="menuSideToggle">
       <span class="menuSideOpt" data-side="left" data-i18n="menuSideLeft">◀ Gauche</span>
@@ -146,6 +150,7 @@
 <div id="tutorialOverlay">
   <div id="tutorialHighlight"></div>
   <div id="tutorialArrow"></div>
+  
   <div id="tutorialScrollHint">
     <span class="tutHintMouse">🖱️</span><span class="tutHintFinger">👆</span>
     <span class="tutHintArrow">⌄</span>
@@ -171,6 +176,7 @@
     <div id="infoBody"></div>
   </div>
 </div>
+
 <div id="patchImgOverlay">
   <div id="patchImgBox">
     <div id="infoHead">
@@ -194,7 +200,7 @@
 
     <div id="marketCommon" class="marketPane">
       <p class="mHint" data-i18n="commonHint">Vrai carnet d'ordres entre joueurs : pose un prix d'achat ou de vente, l'argent/l'objet reste bloqué tant que l'ordre n'est pas exécuté ou annulé. Si ton prix correspond au meilleur ordre opposé, l'échange se fait automatiquement (égalité de prix = tirage au sort).</p>
-
+      
       <div class="cmSubTabs">
         <button class="cmSubTab active" data-cmtab="browse" data-i18n="cmTabBrowse">🛒 Parcourir</button>
         <button class="cmSubTab" data-cmtab="materials" data-i18n="cmTabMaterials">📊 Matériaux</button>
@@ -224,6 +230,7 @@
         </div>
       </div>
 
+      
       <div id="cmPaneMaterials" class="cmSubPane" style="display:none">
         <div class="mktItems" id="mktItemPills"></div>
         <div class="mktMetaRow" id="mktMetaRow"></div>
@@ -323,6 +330,7 @@
           <div id="mpBar"><div id="mpFill"></div><span id="mpPct"></span></div>
         </div>
       </div>
+      
       <div id="potStack">
         <div id="potSlot">
           <span id="potDualIcon"></span>
@@ -332,6 +340,7 @@
       </div>
       <div id="potSelect"></div>
     </div>
+    
     <div id="castBar">
       <div id="castBarLeft"></div>
       <div id="castBarCenter"></div>
@@ -351,9 +360,10 @@
       <div class="catTabs" id="statsTabTabs">
         <button class="catTab active" data-tab="perso" data-i18n="statsTabPerso">Perso</button>
         <button class="catTab" data-tab="reco" data-i18n="statsTabReco">Recommandations</button>
-    
+        
         <button class="catTab" data-tab="levels" data-i18n="statsTabLevels">Niveaux</button>
       </div>
+      
       <div id="statsPersoPane">
         <div class="statRow3"><span data-i18n="lblPS">Gearscore</span><span class="srAbbr" data-i18n="lblPSAbbr">GS</span><span class="v" id="stPS">21</span></div>
         <div class="statRow3"><span data-i18n="lblPA">Attaque effective</span><span class="srAbbr" data-i18n="lblPAAbbr">PA</span><span class="v" id="stPA">14</span></div>
@@ -384,12 +394,13 @@
 
     <div class="card" id="lootCard">
       <h3><span data-i18n="cardLoot">Loot de cette zone</span> <span id="lootZoneName" style="float:right;color:var(--ink-dim);font-size:10px;letter-spacing:0"></span></h3>
-
+      
       <div class="invModeTabs" id="lootPanelTabs">
         <button class="lootPanelTab active" data-panel="loot"><span data-i18n="lootPanelTabLoot">🎒 Loot</span></button>
         <button class="lootPanelTab" data-panel="chest"><span data-i18n="lootPanelTabChest">🏛️ Coffre</span></button>
       </div>
       <div id="lootPanelLootPane">
+        
         <button id="btnAutoSellLoot" class="lockedFeatureBtn" disabled title="Bientôt disponible"><span class="zoneTierLock">🔒</span><span data-i18n="btnAutoSellLoot">Vente automatique</span></button>
         <div id="lootTable"></div>
       </div>
@@ -401,6 +412,7 @@
 
     <div class="card" id="equipCard">
       <h3 data-i18n="cardEquip">Équipement</h3>
+      
       <div id="equipModeSlider" title="Équipement / Cristal">
         <div class="equipModeSeg" data-mode="gear"></div>
         <div class="equipModeSeg" data-mode="crystal"></div>
@@ -411,6 +423,7 @@
           <div class="pdCenter"><canvas id="charPrev" width="120" height="200"></canvas></div>
           <div class="pdCol" id="pdRight"></div>
         </div>
+        
         <div id="equipSummary">
           <span id="eqSumLvl">Niv. 1</span>
           <span id="eqSumXp">00.000%</span>
@@ -421,6 +434,7 @@
         <div id="pdWeapons"></div>
         <div id="pdBook"></div>
       </div>
+      
       <div id="equipCrystalPane" style="display:none">
         <div class="crystalSlotWrap">
           <div class="pdSlot crystalSlot empty" id="crystalSlotCenter" title="Bientôt disponible">
@@ -433,7 +447,8 @@
     <div class="card" id="invCard">
       <h3><span data-i18n="cardInv">Inventaire</span>
         <span id="slotTxtH" style="float:right;color:var(--ink-dim);font-size:11px;letter-spacing:0">0/192</span></h3>
-
+      
+      
       <div class="invModeTabs" id="invModeTabs">
         <button class="invModeTab active" data-mode="inv"><span data-i18n="invModeInv">🎒 Inventaire</span></button>
         <button class="invModeTab" data-mode="craft"><span data-i18n="invModeCraft">🔧 Assemblage</span></button>
@@ -447,8 +462,10 @@
             <button id="btnSellWorse" data-i18n="btnSellWorse" title="Vendre : vend tout objet strictement moins bon que ce qui est déjà équipé (garde toujours la meilleure pièce de chaque emplacement)">🗑️ Vendre</button><button id="btnBuyBackWorse" disabled title="Racheter : annule la dernière vente faite via le bouton Vendre (restaure les objets et le silver dépensé)">↩️</button>
           </span>
         </div>
+        
         <button id="btnEquipSellCompendium" class="fullWidthAction lockedFeatureBtn" disabled title="Bientôt disponible"><span class="zoneTierLock">🔒</span><span data-i18n="btnEquipSellCompendium">⚡ Équiper → 🗑️ Vendre → 📖 Compendium</span></button>
         <div id="equipBestMsg"></div>
+        
         <button id="btnAdminMaxEnh" class="fullWidthAction" style="display:none" title="Passe chaque pièce actuellement équipée à l'enchantement maximum (PEN) -- outil de test admin, aucun effet sur les succès/logs">🛠️ [Admin] Équipement → Optimisation max</button>
         <button id="btnAdminResetEnh" class="fullWidthAction" style="display:none" title="Rétrograde chaque pièce actuellement équipée à +0 -- outil de test admin, aucun effet sur les succès/logs">🛠️ [Admin] Équipement → Tout rétrograder (+0)</button>
         <div id="adminEnhStepRow" class="invTools" style="display:none">
@@ -463,11 +480,13 @@
       </div>
       <div id="invModeCraftPane" style="display:none">
         <div id="treasureCraftPanel"></div>
+        
         <div id="capConvertRow">
           <span id="capConvertLbl"></span>
           <button id="btnConvertCaphras">♻️ <span data-i18n="btnConvertCaphras">Convertir (5:1)</span></button>
         </div>
       </div>
+      
       <div id="invModeCompendiumPane" style="display:none">
         <div id="compGrid"></div>
         <div id="compGridEmpty" class="invCatEmpty" data-i18n="compGridEmpty" style="display:none">Aucun objet protégé pour l'instant</div>
@@ -476,11 +495,13 @@
 
     <div class="card" id="optCard">
       <h3 data-i18n="cardOpt">Optimisation</h3>
+      
       <select id="optTarget" style="display:none"></select>
       <div class="optRow" style="margin-top:8px">
         <div id="optItem">🪄</div>
         <span id="optArrow">→</span>
         <div id="optMat" class="empty">＋</div>
+        
         <div id="optCronSlot" class="empty" title=""><span id="optCronIcon">⏳</span><span id="optCronQty"></span></div>
       </div>
       <div id="optLevelLbl">Bâton de Grunil <b id="optLevelVal">+0</b></div>
@@ -489,7 +510,9 @@
         <div id="optChanceTxt" data-i18n="optChanceEmpty">Chargez un matériau depuis le sac</div>
       </div>
       <button id="btnOpt" disabled data-i18n="btnOptTry">Tenter l'optimisation</button>
+      
       <div id="optSuggest"></div>
+      
       <div id="optAutoModeRow">
         <select id="optAutoMode">
           <option value="target" data-i18n="optAutoModeTarget">Jusqu'à un palier</option>
@@ -510,7 +533,31 @@
 </div>
 
 <script src="meta/patch-notes-data.js?v=430"></script>
+<!-- build de production : un seul bundle concatene + commentaires retires --
+     genere par scripts/build.py depuis index.dev.html, jamais edite a la main -->
 <script src="build/source.js?v=430"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
