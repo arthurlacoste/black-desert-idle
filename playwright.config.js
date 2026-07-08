@@ -7,6 +7,7 @@ module.exports = defineConfig({
   testDir: './tests',
   testMatch: /.*\.spec\.js/,
   timeout: 60_000,
+  workers: 1,
   expect: {
     timeout: 5_000
   },

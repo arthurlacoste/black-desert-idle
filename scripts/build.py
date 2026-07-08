@@ -2,25 +2,24 @@
 """
 Build local pour Black Desert Idle (2026-07-08).
 
-Aucun Node/npm sur cette machine -- pas d'UglifyJS/Terser possible. Ce script fait donc :
+Ce script fait donc :
   1. lit l'ordre exact des <script src="src/..."> dans index.dev.html (source de verite
-     unique pour l'ordre de dependance -- voir CLAUDE.md, section chargement) ;
+     unique pour l'ordre de dependance, voir CLAUDE.md, section chargement) ;
   2. concatene ces fichiers dans cet ordre, en retirant les commentaires JS (// et /* */)
      via un mini-analyseur caractere par caractere qui respecte les chaines/template
-     literals (y compris ${...} imbriques) -- PAS une regex naive qui casserait toute
+     literals (y compris ${...} imbriques), pas une regex naive qui casserait toute
      chaine contenant "//" (URLs, etc.) ;
   3. compacte les lignes vides ;
-  4. ecrit le resultat dans build/source.js ;
-  5. reecrit index.html (PROD, servi par GitHub Pages) pour ne plus charger que ce bundle
-     (+ la balise Supabase CDN, le CSS, les patch notes en RPC -- pas de tests).
-
-"Compresse sans commentaires" au sens litteral de la demande -- PAS une minification
-agressive (pas de renommage de variables, pas d'elimination de code mort). Si Node devient
-disponible un jour, ce script peut etre remplace par un vrai Terser/esbuild.
+  4. ecrit le bundle lisible dans build/source.js ;
+  5. minifie avec Terser dans build/source.min.js : compression + variables locales raccourcies,
+     sans toplevel et sans mangle-props pour garder les globals, proprietes, callbacks, RPC SQL
+     et appels Supabase intacts ;
+  6. reecrit index.html pour charger build/source.min.js.
 
 Usage : python scripts/build.py
 """
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -29,6 +28,7 @@ DEV_HTML = ROOT / "index.dev.html"
 PROD_HTML = ROOT / "index.html"
 BUILD_DIR = ROOT / "build"
 BUNDLE_PATH = BUILD_DIR / "source.js"
+MINIFIED_BUNDLE_PATH = BUILD_DIR / "source.min.js"
 
 # fichiers explicitement exclus du bundle prod meme s'ils apparaissent dans index.dev.html
 EXCLUDED_SUBSTRINGS = ("tests/tests.js", "meta/patch-notes-data.js", "supabase-js")
@@ -188,6 +188,50 @@ def compact_blank_lines(code):
     return "\n".join(out)
 
 
+def format_bytes(size):
+    if size >= 1024 * 1024:
+        return f"{size / (1024 * 1024):.1f} Mo"
+    if size >= 1024:
+        return f"{size / 1024:.1f} Ko"
+    return f"{size} o"
+
+
+def minify_bundle_with_terser():
+    """Minifie avec Terser. Safe mode : pas de toplevel, pas de mangle-props.
+    Les fonctions globales, noms de proprietes, strings RPC SQL et appels Supabase restent stables.
+    """
+    cmd = [
+        "npx",
+        "--no-install",
+        "terser",
+        str(BUNDLE_PATH),
+        "--compress",
+        "passes=2",
+        "--mangle",
+        "--output",
+        str(MINIFIED_BUNDLE_PATH),
+    ]
+    try:
+        subprocess.run(cmd, cwd=ROOT, check=True)
+    except FileNotFoundError:
+        print("ERREUR: npx introuvable. Lance npm install, puis relance npm run build.", file=sys.stderr)
+        sys.exit(1)
+    except subprocess.CalledProcessError as exc:
+        print("ERREUR: Terser a echoue. Lance npm install, puis relance npm run build.", file=sys.stderr)
+        sys.exit(exc.returncode)
+
+
+
+def print_size_report(total_source_bytes, stripped_bytes):
+    readable_size = BUNDLE_PATH.stat().st_size
+    minified_size = MINIFIED_BUNDLE_PATH.stat().st_size
+    stripped_pct = 100 * (1 - stripped_bytes / total_source_bytes) if total_source_bytes else 0
+    min_pct = 100 * (1 - minified_size / readable_size) if readable_size else 0
+
+    print(f"\nbuild/source.js genere : {format_bytes(total_source_bytes)} -> {format_bytes(stripped_bytes)} ({stripped_pct:.1f}% de reduction)")
+    print(f"build/source.min.js genere : {format_bytes(readable_size)} -> {format_bytes(minified_size)} ({min_pct:.1f}% de reduction)")
+
+
 def main():
     if not DEV_HTML.exists():
         print(f"ERREUR: {DEV_HTML} introuvable", file=sys.stderr)
@@ -220,25 +264,18 @@ def main():
     bundle = "\n".join(parts)
     BUILD_DIR.mkdir(exist_ok=True)
     BUNDLE_PATH.write_text(bundle, encoding="utf-8", newline="\n")
-    pct = 100 * (1 - total_after / total_before) if total_before else 0
-    print(f"\nbuild/source.js genere : {total_before} -> {total_after} octets ({pct:.1f}% de reduction)")
+    minify_bundle_with_terser()
+    print_size_report(total_before, total_after)
 
     rewrite_prod_html(dev_html)
-    print("index.html (prod) reecrit pour charger build/source.js")
+    print("index.html (prod) reecrit pour charger build/source.min.js")
 
 
 def rewrite_prod_html(dev_html):
-    """Reconstruit index.html a partir de index.dev.html, ligne par ligne (approche simple et
-    robuste, plutot que de detecter des "blocs de commentaires" -- les commentaires d'index.html
-    ne sont pas executes, les laisser en prod meme s'ils deviennent legerement obsoletes est sans
-    consequence, largement preferable a une detection fragile qui risquerait de couper au mauvais
-    endroit) :
-      - chaque <script src="src/...  -> retiree ; une seule balise vers le bundle est inseree
-        a la position de la PREMIERE d'entre elles ;
-      - <script src="meta/patch-notes-data.js...> -> conservee TELLE QUELLE, encore chargee
-        separement (pas migree vers Supabase -- Phase 2) : sans elle, CURRENT_VERSION =
-        PATCH_NOTES[0].v (top-level dans game-supabase.js, donc dans le bundle) plante au
-        chargement ;
+    """Reconstruit index.html a partir de index.dev.html, ligne par ligne :
+      - chaque <script src="src/...  -> retiree ; une seule balise vers le bundle minifie est inseree
+        a la position de la premiere d'entre elles ;
+      - <script src="meta/patch-notes-data.js...> -> conservee telle quelle, avant le bundle ;
       - <script src="tests/tests.js...> -> retiree entierement, jamais chargee en prod."""
     m = re.search(r"\?v=(\d+)", dev_html)
     version = m.group(1) if m else "1"
@@ -256,13 +293,7 @@ def rewrite_prod_html(dev_html):
         if re.search(r'<script src="(src/|meta/)', line):
             if not bundle_tag_inserted:
                 prod_lines.extend(meta_lines)
-                prod_lines.append(
-                    "<!-- build de production : un seul bundle concatene + commentaires retires --"
-                )
-                prod_lines.append(
-                    "     genere par scripts/build.py depuis index.dev.html, jamais edite a la main -->"
-                )
-                prod_lines.append(f'<script src="build/source.js?v={version}"></script>')
+                prod_lines.append(f'<script src="build/source.min.js?v={version}"></script>')
                 bundle_tag_inserted = True
             continue  # les autres balises src/|meta/ sont sautees (deja placees ci-dessus)
         if re.search(r'<script src="tests/tests\.js', line):
