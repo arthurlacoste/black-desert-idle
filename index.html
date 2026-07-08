@@ -4,10 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Black Desert Idle — Progression & Zones</title>
-<!-- version figee + integrite verifiee (2026-07-14, issue GitHub #4 finding M1) : "@2" flottant sans
-     SRI aurait execute silencieusement tout code servi par jsdelivr/npm sous ce nom, y compris en
-     cas de compromission de la chaine d'approvisionnement -- hash recalcule independamment (voir
-     commit), pas juste copie depuis jsdelivr -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.0/dist/umd/supabase.js"
   integrity="sha256-LbKRLxaTmjshtHKYCnradGszpqQHCLxVXLC+JVxutbE=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="src/styles/styles.css?v=430">
@@ -40,10 +37,7 @@
 </div>
 
 <div id="achToastStack"></div>
-<!-- aperçu agrandi au survol d'une icône de la table de loot (2026-07-08, demande explicite) -->
 <div id="lootIconZoom"></div>
-<!-- bannière d'annonce importante (ex: reset complet des comptes), livrée une seule fois via
-     claim_pending_notice() à la connexion — demande explicite du 2026-07-06 -->
 <div id="resetNoticeOverlay" class="resetNoticeOverlay">
   <div class="resetNoticeCard">
     <div class="resetNoticeIcon" id="resetNoticeIcon">🔄</div>
@@ -66,7 +60,6 @@
     <div class="catTabs" id="chatTabs"></div>
     <div id="chatMessages"></div>
     <div id="chatInputRow">
-      <!-- liste de suggestions pour les mentions @joueur (2026-07-05, demande explicite) -->
       <div id="chatMentionList"></div>
       <input type="text" id="chatInput" maxlength="300" placeholder="…">
       <button id="chatSendBtn">➤</button>
@@ -83,8 +76,7 @@
 <div id="sideMenu">
   <button id="btnCollapseMenu" title="Replier/déplier le menu">◀</button>
 
-  <!-- le vrai jeu en premier (2026-07-05, demande explicite) : ce qu'on utilise le plus souvent
-       pendant une session -->
+
   <div id="gameBar">
     <button id="btnDailyQuests"><span data-i18n="btnDailyQuests">🗒️ Quêtes</span><span id="questBadge"></span></button>
     <button id="btnMailbox"><span data-i18n="btnMailbox">📬 Courrier</span><span id="mailBadge"></span></button>
@@ -93,8 +85,7 @@
     <button id="btnAchievements"><span data-i18n="btnAchievements">🏅 Succès</span><span class="contentNewBadge" id="newBadgeAchievements">1</span></button>
     <button id="btnMarket" title="BETA — en construction, encore peu fonctionnel"><span data-i18n="btnMarketLbl">🏛️ Marché</span><span class="betaTag">BETA</span></button>
     <button id="btnLeaderboard" data-i18n="btnLeaderboard">🏆 Classement</button>
-    <!-- Pet/Mer déplacés le 2026-07-17 (demande explicite) dans la barre d'onglets de région
-         (#zoneTierTabs, voir EXTRA_TEASER_TABS dans core/game-core.js) -- retirés d'ici -->
+
   </div>
 
   <div id="userBar">
@@ -109,7 +100,6 @@
     <span id="saveStatus"></span>
   </div>
 
-  <!-- infos moins utiles au quotidien, reléguées en bas (2026-07-05, demande explicite) -->
   <div id="metaBar">
     <div id="onlineStatsBox">
       <div id="onlineCounter">🟢 <b id="onlineTotal">—</b> <span data-i18n="onlineLbl">en ligne</span><span id="onlineGuests"></span></div>
@@ -124,9 +114,7 @@
     <button id="btnWiki"><span data-i18n="btnWiki">📖 Wiki</span><span class="contentNewBadge" id="newBadgeWiki">1</span></button>
     <button id="btnPatch"><span data-i18n="btnPatch">📜 Notes de version</span><span id="patchBadge"></span></button>
     <a id="btnDiscord" href="https://discord.gg/fEubtqMjtP" target="_blank" rel="noopener noreferrer">💬 Discord</a>
-    <!-- Donation (2026-07-16, demande explicite : "ajoute un bouton Donation bloque cadenas") --
-         verrouillée, en attente d'une future intégration (ex: Ko-fi/Patreon) ; renommée "Soutenir"
-         le 2026-07-17 (demande explicite) -->
+
     <button id="btnDonation" class="lockedFeatureBtn" disabled title="Bientôt disponible"><span class="zoneTierLock">🔒</span><span data-i18n="btnDonation">💖 Soutenir</span></button>
     <div id="menuSideToggle">
       <span class="menuSideOpt" data-side="left" data-i18n="menuSideLeft">◀ Gauche</span>
@@ -158,10 +146,6 @@
 <div id="tutorialOverlay">
   <div id="tutorialHighlight"></div>
   <div id="tutorialArrow"></div>
-  <!-- indice de défilement (2026-07-05, demande explicite) : affiché quand l'élément mis en avant
-       par l'étape en cours est hors du champ visible, pour indiquer qu'il faut faire défiler la
-       page pour le voir. Icône différente selon la plateforme (souris/molette sur ordinateur,
-       doigt qui glisse sur mobile/tablette) — voir positionTutorialStep() -->
   <div id="tutorialScrollHint">
     <span class="tutHintMouse">🖱️</span><span class="tutHintFinger">👆</span>
     <span class="tutHintArrow">⌄</span>
@@ -187,9 +171,6 @@
     <div id="infoBody"></div>
   </div>
 </div>
-
-<!-- comparateur avant/après pour les notes de version (2026-07-05, demande explicite) : s'ouvre
-     PAR-DESSUS le panneau des notes de version (voir patchImgBtn/PATCH_NOTES[].img) -->
 <div id="patchImgOverlay">
   <div id="patchImgBox">
     <div id="infoHead">
@@ -203,12 +184,6 @@
   </div>
 </div>
 
-<!-- renommé "Marché commun" (2026-07-16, demande explicite : "Marché : renommé en marché commun") --
-     les anciens onglets de premier niveau Acheter/Vendre/Mes annonces (simples annonces à prix
-     fixe, table market_listings) sont retirés (demande explicite : "supprime onglet acheter vendre
-     mes annonce") : le carnet d'ordres du Marché commun (market_orders, order book + chandelier)
-     les remplace entièrement -- on atterrit directement dedans, plus aucun onglet de premier niveau
-     à choisir (demande explicite : "on se retrouve dans le marché commun sans onglet") -->
 <div id="marketOverlay">
   <div id="marketBox">
     <div id="marketHead">
@@ -219,8 +194,7 @@
 
     <div id="marketCommon" class="marketPane">
       <p class="mHint" data-i18n="commonHint">Vrai carnet d'ordres entre joueurs : pose un prix d'achat ou de vente, l'argent/l'objet reste bloqué tant que l'ordre n'est pas exécuté ou annulé. Si ton prix correspond au meilleur ordre opposé, l'échange se fait automatiquement (égalité de prix = tirage au sort).</p>
-      <!-- sous-onglet "Vendre" (vente d'1 pièce de gear/bijou à prix fixe) retiré (2026-07-08,
-           demande explicite : "enleve vendre") -- ne reste que Parcourir/Matériaux/Mes ordres -->
+
       <div class="cmSubTabs">
         <button class="cmSubTab active" data-cmtab="browse" data-i18n="cmTabBrowse">🛒 Parcourir</button>
         <button class="cmSubTab" data-cmtab="materials" data-i18n="cmTabMaterials">📊 Matériaux</button>
@@ -250,12 +224,6 @@
         </div>
       </div>
 
-      <!-- carnet d'ordres + graphique chandelier pour les matériaux (2026-07-16, demande explicite :
-           "envoyer le nouveau marché" -- reprend le design de l'artefact de démo, branché sur les
-           vraies données : market_order_book (RPC déjà existante) + market_trades (table déjà
-           existante, RLS SELECT publique, alimentée par market_match_item côté serveur). Pas de
-           bots ni de fourchette min/max fictive (spécifiques à la démo) -- prix validé comme partout
-           ailleurs (juste > 0). -->
       <div id="cmPaneMaterials" class="cmSubPane" style="display:none">
         <div class="mktItems" id="mktItemPills"></div>
         <div class="mktMetaRow" id="mktMetaRow"></div>
@@ -355,10 +323,6 @@
           <div id="mpBar"><div id="mpFill"></div><span id="mpPct"></span></div>
         </div>
       </div>
-      <!-- case unique vie+mana (2026-07-08, demande explicite : "la potion qui remplace les 2
-           potion, qui ouvre le pannel de potion vie et mana") -- remplace les 2 cases séparées
-           #potSlot/#manaPotSlot ; le CD de chaque potion reste suivi indépendamment (moitié
-           gauche = vie, moitié droite = mana), le clic ouvre un panneau unique pour les 2 -->
       <div id="potStack">
         <div id="potSlot">
           <span id="potDualIcon"></span>
@@ -368,8 +332,6 @@
       </div>
       <div id="potSelect"></div>
     </div>
-    <!-- barre d'incantation (2026-07-05, demande explicite) : la matière se retire des 2 côtés
-         vers le centre, le sort se lance quand elle a entièrement disparu -- voir renderCastBar() -->
     <div id="castBar">
       <div id="castBarLeft"></div>
       <div id="castBarCenter"></div>
@@ -389,14 +351,9 @@
       <div class="catTabs" id="statsTabTabs">
         <button class="catTab active" data-tab="perso" data-i18n="statsTabPerso">Perso</button>
         <button class="catTab" data-tab="reco" data-i18n="statsTabReco">Recommandations</button>
-        <!-- onglet Niveaux (2026-07-15, demande explicite : "ce qu'on gagne par lvl (5 avant 5
-             apres et celui + le notre) en stats") -->
+    
         <button class="catTab" data-tab="levels" data-i18n="statsTabLevels">Niveaux</button>
       </div>
-      <!-- stats du haut passées en 3 colonnes le 2026-07-15 (demande explicite : "3 colonnes a
-           gauche le mot au milieu l'abreviation et a droite la stat") -- voir .statRow3 dans
-           styles.css. Kills/min, Monstres tués et Objets ramassés déplacés dans "Stats de la zone"
-           (demande explicite), Loups abattus renommé Monstres tués -->
       <div id="statsPersoPane">
         <div class="statRow3"><span data-i18n="lblPS">Gearscore</span><span class="srAbbr" data-i18n="lblPSAbbr">GS</span><span class="v" id="stPS">21</span></div>
         <div class="statRow3"><span data-i18n="lblPA">Attaque effective</span><span class="srAbbr" data-i18n="lblPAAbbr">PA</span><span class="v" id="stPA">14</span></div>
@@ -427,18 +384,12 @@
 
     <div class="card" id="lootCard">
       <h3><span data-i18n="cardLoot">Loot de cette zone</span> <span id="lootZoneName" style="float:right;color:var(--ink-dim);font-size:10px;letter-spacing:0"></span></h3>
-      <!-- onglet "Coffre" (2026-07-16, demande explicite : "en haut du loot de cette zone on ajoute
-           un onglet coffre lié a la ville") -- rangement personnel séparé du sac, voir VELIA_CHEST
-           (game-core.js) / renderVeliaChest (inventory-ui.js) -->
+
       <div class="invModeTabs" id="lootPanelTabs">
         <button class="lootPanelTab active" data-panel="loot"><span data-i18n="lootPanelTabLoot">🎒 Loot</span></button>
         <button class="lootPanelTab" data-panel="chest"><span data-i18n="lootPanelTabChest">🏛️ Coffre</span></button>
       </div>
       <div id="lootPanelLootPane">
-        <!-- vente automatique (2026-07-14, demande explicite) : verrouillée, en attente d'une
-             future fonctionnalité -- cadenas en badge au-dessus, centré (2026-07-16, demande explicite :
-             "vente auto met le cadenas au dessus toujours au dessus systematique"), même convention
-             que .zoneTierLock partout ailleurs, plus jamais inline dans le texte du bouton -->
         <button id="btnAutoSellLoot" class="lockedFeatureBtn" disabled title="Bientôt disponible"><span class="zoneTierLock">🔒</span><span data-i18n="btnAutoSellLoot">Vente automatique</span></button>
         <div id="lootTable"></div>
       </div>
@@ -450,9 +401,6 @@
 
     <div class="card" id="equipCard">
       <h3 data-i18n="cardEquip">Équipement</h3>
-      <!-- sélecteur à bulles Équipement/Cristal (2026-07-15, demande explicite : "un nouveau slider
-           a bulle dans le theme... pour changer d'equipement a cristal") -- même pilule dorée que
-           farmModeSlider/aiModeSlider, voir renderEquipModeBtn()/setEquipMode() -->
       <div id="equipModeSlider" title="Équipement / Cristal">
         <div class="equipModeSeg" data-mode="gear"></div>
         <div class="equipModeSeg" data-mode="crystal"></div>
@@ -463,9 +411,6 @@
           <div class="pdCenter"><canvas id="charPrev" width="120" height="200"></canvas></div>
           <div class="pdCol" id="pdRight"></div>
         </div>
-        <!-- déplacé sous le personnage animé (2026-07-14, demande explicite : "affiche niveau/ap dp
-             %GS dans un beau cadre en dessous du personnage que tu as animer") -- vivait avant au-
-             dessus de #paperdoll, même cadre dorré (voir #equipSummary dans styles.css) -->
         <div id="equipSummary">
           <span id="eqSumLvl">Niv. 1</span>
           <span id="eqSumXp">00.000%</span>
@@ -476,8 +421,6 @@
         <div id="pdWeapons"></div>
         <div id="pdBook"></div>
       </div>
-      <!-- onglet Cristal (2026-07-15, demande explicite : "1 slot de cristal au milieu locké") --
-           un seul emplacement pour l'instant, verrouillé, centré -- pas encore de source en jeu -->
       <div id="equipCrystalPane" style="display:none">
         <div class="crystalSlotWrap">
           <div class="pdSlot crystalSlot empty" id="crystalSlotCenter" title="Bientôt disponible">
@@ -490,11 +433,7 @@
     <div class="card" id="invCard">
       <h3><span data-i18n="cardInv">Inventaire</span>
         <span id="slotTxtH" style="float:right;color:var(--ink-dim);font-size:11px;letter-spacing:0">0/192</span></h3>
-      <!-- bascule Inventaire/Assemblage (2026-07-06, demande explicite) : le craft du Trésor de
-           Velia vivait dans la carte Optimisation, déplacé ici derrière un bouton en haut -->
-      <!-- Compendium promu au même niveau qu'Inventaire/Assemblage (2026-07-14, demande explicite :
-           "met compendium en grand avec inventaire et assemblage") -- avant, simple catégorie DANS
-           l'onglet Inventaire, voir #invModeCompendiumPane -->
+
       <div class="invModeTabs" id="invModeTabs">
         <button class="invModeTab active" data-mode="inv"><span data-i18n="invModeInv">🎒 Inventaire</span></button>
         <button class="invModeTab" data-mode="craft"><span data-i18n="invModeCraft">🔧 Assemblage</span></button>
@@ -508,17 +447,8 @@
             <button id="btnSellWorse" data-i18n="btnSellWorse" title="Vendre : vend tout objet strictement moins bon que ce qui est déjà équipé (garde toujours la meilleure pièce de chaque emplacement)">🗑️ Vendre</button><button id="btnBuyBackWorse" disabled title="Racheter : annule la dernière vente faite via le bouton Vendre (restaure les objets et le silver dépensé)">↩️</button>
           </span>
         </div>
-        <!-- action combinée (2026-07-14, demande explicite) : équipe le meilleur, vend ce qui est
-             moins bon que l'équipé (protège le 1er exemplaire de chaque type dans le Compendium),
-             en un seul clic -- même logique que btnEquipBest + btnSellWorse, enchaînée.
-             Verrouillée le même jour (demande explicite : "bloque avec un cadenas equiper vendre
-             compendium") -- cadenas repassé en badge au-dessus, centré (2026-07-16, demande
-             explicite : "met tout les cadenas en haut au milieu"), même convention que
-             .zoneTierLock partout ailleurs -->
         <button id="btnEquipSellCompendium" class="fullWidthAction lockedFeatureBtn" disabled title="Bientôt disponible"><span class="zoneTierLock">🔒</span><span data-i18n="btnEquipSellCompendium">⚡ Équiper → 🗑️ Vendre → 📖 Compendium</span></button>
         <div id="equipBestMsg"></div>
-        <!-- outil de debug réservé à l'admin (2026-07-14, demande explicite : "juste pour admin")
-             -- masqué par défaut, affiché uniquement si isAdmin() (voir updateUserBar) -->
         <button id="btnAdminMaxEnh" class="fullWidthAction" style="display:none" title="Passe chaque pièce actuellement équipée à l'enchantement maximum (PEN) -- outil de test admin, aucun effet sur les succès/logs">🛠️ [Admin] Équipement → Optimisation max</button>
         <button id="btnAdminResetEnh" class="fullWidthAction" style="display:none" title="Rétrograde chaque pièce actuellement équipée à +0 -- outil de test admin, aucun effet sur les succès/logs">🛠️ [Admin] Équipement → Tout rétrograder (+0)</button>
         <div id="adminEnhStepRow" class="invTools" style="display:none">
@@ -533,16 +463,11 @@
       </div>
       <div id="invModeCraftPane" style="display:none">
         <div id="treasureCraftPanel"></div>
-        <!-- craft de la Pierre de Caphras (2026-07-14, demande explicite : "ajouter le craft de
-             caphras dans assemblage, tout prochain craft sera dans assemblage") -- vivait
-             jusqu'ici dans la carte Optimisation, déplacé ici avec le reste du craft -->
         <div id="capConvertRow">
           <span id="capConvertLbl"></span>
           <button id="btnConvertCaphras">♻️ <span data-i18n="btnConvertCaphras">Convertir (5:1)</span></button>
         </div>
       </div>
-      <!-- sac protégé (Compendium), promu en onglet principal le 2026-07-14 -- grille dédiée
-           (#compGrid), même style de case que #invGrid, remplie par renderCompendiumPane() -->
       <div id="invModeCompendiumPane" style="display:none">
         <div id="compGrid"></div>
         <div id="compGridEmpty" class="invCatEmpty" data-i18n="compGridEmpty" style="display:none">Aucun objet protégé pour l'instant</div>
@@ -551,20 +476,11 @@
 
     <div class="card" id="optCard">
       <h3 data-i18n="cardOpt">Optimisation</h3>
-      <!-- choix manuel de la pièce à optimiser retiré (2026-07-14, demande explicite : "optimisation
-           enleve le choix d'equipement") -- la cible (optTargetSlot) reste gérée par ailleurs, via
-           "Mettre en optimisation" sur une pièce (menu objet/poupée) ou en équipant depuis le
-           Compendium (voir equipFromCompendium) ; le <select> reste dans le DOM (renderOptimization()
-           le peuple toujours) mais n'est plus affiché -->
       <select id="optTarget" style="display:none"></select>
       <div class="optRow" style="margin-top:8px">
         <div id="optItem">🪄</div>
         <span id="optArrow">→</span>
         <div id="optMat" class="empty">＋</div>
-        <!-- Pierre de Cron : desormais au choix du joueur (2026-07-06, demande explicite), plus
-             consommee automatiquement en silence -- la case elle-meme sert de bouton on/off
-             (2026-07-08, demande explicite : "bouton sur le carre de stoncron... = cron grise"),
-             remplace l'ancienne case a cocher separee -->
         <div id="optCronSlot" class="empty" title=""><span id="optCronIcon">⏳</span><span id="optCronQty"></span></div>
       </div>
       <div id="optLevelLbl">Bâton de Grunil <b id="optLevelVal">+0</b></div>
@@ -573,14 +489,7 @@
         <div id="optChanceTxt" data-i18n="optChanceEmpty">Chargez un matériau depuis le sac</div>
       </div>
       <button id="btnOpt" disabled data-i18n="btnOptTry">Tenter l'optimisation</button>
-      <!-- "Conseil de stuff" repositionné entre l'action d'optimisation et les contrôles
-           d'auto-optimisation qui consomment des Pierres de Cron (2026-07-15, demande explicite :
-           "met le conseil de stuff entre l'opti et les cron") -- le titre de catégorie ("statSep")
-           est supprimé au passage (demande explicite : "supprime categorie conseil de stuff"),
-           #optSuggest reste seul, sans en-tête -->
       <div id="optSuggest"></div>
-      <!-- modes d'auto-optimisation (2026-07-08, demande explicite : "tenter en boucle / jusqu'a
-           echec / jusqu'a plus de pierre de cron") — en plus du mode existant "jusqu'à un palier" -->
       <div id="optAutoModeRow">
         <select id="optAutoMode">
           <option value="target" data-i18n="optAutoModeTarget">Jusqu'à un palier</option>
@@ -600,87 +509,8 @@
   </div>
 </div>
 
-<!-- icônes SVG (équipement/bijoux/matériaux/Pierre de Cron) -- extrait de game-core.js le
-     2026-07-08 (réorganisation par dossiers) -- module autonome, DOIT charger EN PREMIER : GEAR_TIERS
-     (world/gear-tiers-data.js) lit ICO_MAT_* immédiatement au chargement -->
 <script src="meta/patch-notes-data.js?v=430"></script>
-<!-- build de production : un seul bundle concatene + commentaires retires --
-     genere par scripts/build.py depuis index.dev.html, jamais edite a la main -->
 <script src="build/source.js?v=430"></script>
-<!-- données pures ZONES[] -- extrait de game-core.js le 2026-07-08 (réorganisation par dossiers) --
-     DOIT charger AVANT game-core.js : resetWorld() (appelé au top-level de game-core.js) lit ZONES
-     dès le premier chargement du script -->
-<!-- paliers de stuff (GEAR_TIERS, GEAR_ROLE...) -- extrait de game-core.js le 2026-07-08
-     (réorganisation par dossiers) -- DOIT charger APRÈS inventory/gear-icons.js (lit ICO_MAT_*
-     immédiatement) et AVANT game-core.js -->
-<!-- table d'XP par niveau, paliers de régions, potions de vie -- extraits de game-core.js le
-     2026-07-08 (réorganisation par dossiers) -- pure donnée, aucune dépendance, chargés AVANT
-     game-core.js -->
-<!-- classe Sorcier : sorts (SKILLS) -- extrait de game-core.js le 2026-07-08 (réorganisation par
-     dossiers, prépare l'ajout futur d'autres classes jouables) -- DOIT charger AVANT
-     game-core.js : la boucle qui construit la barre de sorts lit SKILLS immédiatement -->
-<!-- classe Sorcier : rendu du personnage (drawWitchIso, witchBodyOn...) -- extrait de
-     world/render.js le 2026-07-08 (réorganisation par dossiers) -- DOIT charger juste APRÈS
-     core/game-core.js (toScreen/ctx/P) et AVANT inventory/inventory-ui.js ET world/render.js :
-     tous deux appellent witchBodyOn de façon SYNCHRONE au chargement (render.js appelle hud()
-     -> refreshInvUI() -> renderEquipment() -> drawPreviewChar() -> drawWitchOn() ->
-     witchBodyOn() avant même requestAnimationFrame(loop) -- bug réel constaté le 2026-07-08 :
-     avec sorcier-render.js chargé après render.js, ce premier hud() lançait un ReferenceError
-     qui empêchait purement et simplement requestAnimationFrame(loop) de s'exécuter, gelant tout
-     le jeu dès le chargement) -->
-<!-- définitions des succès -- extrait de game-core.js le 2026-07-08 (réorganisation par dossiers)
-     -- DOIT charger APRÈS core/game-core.js : target:ZONES.length/PRI_IDX/ENH_NAMES.length-1 sont
-     évalués immédiatement au chargement -->
-<!-- Trésor de Velia (craft) -- extrait de game-core.js le 2026-07-08 (réorganisation par
-     dossiers) -- DOIT charger APRÈS core/game-core.js (utilise INV/addSilver/Z()/GEAR_ROLE...) -->
-<!-- notifications, succès (UI), courrier, compendium, quêtes -- extrait de game-core.js le
-     2026-07-08 (réorganisation par dossiers) -- DOIT charger APRÈS core/game-core.js,
-     progression/achievements-data.js et progression/treasure-craft.js -->
-<!-- modes IA (combat défensif/équilibré/overgeared + farm loot/xp) -- extrait de
-     progression/notifications-quests.js le 2026-07-08 (réorganisation par dossiers, correction :
-     ce n'est pas de la progression, c'est du comportement de combat/farm) -- charge APRÈS
-     core/game-core.js -->
-<!-- génération du loot & gain d'XP -- extrait de game-core.js le 2026-07-08 (réorganisation par
-     dossiers) -- DOIT charger APRÈS core/game-core.js et progression/notifications-quests.js
-     (gainXp appelle pushNotif) -->
-<!-- VFX (particules de sorts) -- extrait de game-core.js le 2026-07-08 (réorganisation par
-     dossiers) -- DOIT charger APRÈS core/game-core.js -->
-<!-- utilisation des potions (cout dynamique + UI sélecteur) -- extrait de game-core.js le
-     2026-07-08 (réorganisation par dossiers) -- DOIT charger APRÈS core/game-core.js et
-     combat/potions-data.js -->
-<!-- World Boss (Kzarka/Vell : lobby, combat, rendu de la salle) -- extrait de game-core.js le
-     2026-07-14 -- charge APRÈS lui : n'utilise que des fonctions/consts déjà définies à ce stade
-     ($, S, EQUIP, effHpMax, ZONES...) et le canvas #bossCv déjà présent dans le DOM -->
-<!-- rendu canvas de la salle de boss -- extrait de boss.js le 2026-07-08 (réorganisation par
-     dossiers) -- DOIT charger APRÈS boss.js (bossLoop() appelle drawBossRoom()) -->
-<!-- inventaire/équipement -- UI (paperdoll, grille, enchantement, auto-opti) -- extrait de
-     game-core.js le 2026-07-14 -- DOIT charger AVANT render.js : le démarrage du jeu (à la fin de
-     render.js) appelle hud(), qui appelle refreshInvUI()/hasNeglectedUpgradeInBag(), tous deux
-     définis ici -->
-<!-- migrations rétroactives du stuff -- extrait de inventory-ui.js le 2026-07-08 (réorganisation
-     par dossiers) -- appelées depuis applySaveState() (core/game-core.js), en exécution
-     uniquement -- charge APRÈS inventory-ui.js -->
-<!-- outils debug admin d'enchantement (max/reset/±1 rang sur tout l'équipement) -- extrait de
-     inventory-ui.js le 2026-07-08 (réorganisation par dossiers) -- DOIT charger APRÈS
-     inventory-ui.js (refreshEquipSlot/renderOptimization/drawPreviewChar) -->
-<!-- rendu canvas (scène, sprites, particules) -- extrait de game-core.js le 2026-07-14 -- charge
-     APRÈS game-core.js/boss.js/inventory-ui.js : hud() (dans game-core.js) appelle
-     drawZoneMobIcon() (défini ici), donc ce fichier DOIT charger avant le tout premier hud(). C'est
-     pourquoi le démarrage du jeu (renderInvCatTabs/hud/requestAnimationFrame(loop), avant à la toute
-     fin de game-core.js) a été déplacé à la fin de CE fichier -- requestAnimationFrame(loop) doit
-     rester le tout dernier appel synchrone du chargement, sinon la boucle de jeu ne démarre jamais -->
-<!-- données pures PATCH_NOTES (~2000 lignes, extraites de game-supabase.js le 2026-07-14 pour
-     alléger le fichier) -- DOIT charger avant game-supabase.js, qui lit PATCH_NOTES[0].v au
-     top-level dès son chargement (voir CURRENT_VERSION) -->
-<!-- panneau Admin (reset demo/quêtes/comptes, screenshot joueur, analytics) -- extrait de
-     game-supabase.js le 2026-07-14 -- charge APRÈS lui : n'utilise que des fonctions/consts déjà
-     définies à ce stade ($a, isAdmin, sb, currentUser...) -->
-<!-- chat (mondial/trade/annonce + mentions @joueur) -- extrait de game-supabase.js le 2026-07-14 --
-     charge APRÈS lui : appelle immédiatement fetchChatMessages/pollChatUnread (setInterval au
-     top-level), qui ont besoin de $a/sb/currentUser déjà définis -->
-<!-- marché (Hôtel des ventes + Marché commun v2, carnet d'ordres) -- extrait de game-supabase.js
-     le 2026-07-14 -- charge APRÈS lui : wiring $a('btnMarket').onclick etc au top-level -->
-<!-- suite de tests de régression, jamais lancée automatiquement — voir runRegressionTests() dans
-     tests.js (demande explicite du 2026-07-08 : "test unitaire + test de régression systématique") -->
+
 </body>
 </html>
